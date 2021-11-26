@@ -12,12 +12,16 @@ from .permissions import IsKorisnikOwner
 
 
 class KorisnikStanList(generics.ListCreateAPIView):
+    """ lista vlasnika sa stanovima """
+
     permission_classes = [permissions.IsAuthenticated]
     queryset = Korisnik.objects.all()
     serializer_class = KorisnikSerializer
 
 
 class KorisnikStanDetail(generics.RetrieveUpdateDestroyAPIView):
+    """ vlasnik po korisnickom imenu sa stanom/vima """
+
     permission_classes = [permissions.IsAdminUser]
     queryset = Korisnik.objects.all()
     serializer_class = KorisnikSerializer
@@ -29,6 +33,8 @@ class KorisnikStanDetail(generics.RetrieveUpdateDestroyAPIView):
 
 
 class StanList(generics.ListCreateAPIView):
+    """ lista svih stanova """
+
     permission_classes = [permissions.IsAuthenticated]
     queryset = Stan.objects.all()
     serializer_class = StanSerializer
@@ -38,8 +44,9 @@ class StanDetail(mixins.RetrieveModelMixin,
                  mixins.UpdateModelMixin,
                  mixins.DestroyModelMixin,
                  generics.GenericAPIView):
-    permission_classes = [permissions.IsAdminUser]
+    """ editabilni detalji stana po id-ju """
 
+    permission_classes = [permissions.IsAdminUser]
     queryset = Stan.objects.all()
     serializer_class = StanSerializer
 
@@ -54,6 +61,8 @@ class StanDetail(mixins.RetrieveModelMixin,
 
 
 class StanBy(viewsets.ModelViewSet):
+    """ pretraga stanova po filterima """
+
     permission_classes = [permissions.IsAuthenticated]
     queryset = Stan.objects.all()
     serializer_class = StanSerializer

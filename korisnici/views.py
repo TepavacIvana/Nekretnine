@@ -13,6 +13,8 @@ from .models import Korisnik
 
 
 class AuthViewSet(viewsets.GenericViewSet):
+    """ registracija i logovanje korisnika """
+
     queryset = ''
     permission_classes = [AllowAny, ]
     serializer_class = serializers.EmptySerializer
@@ -53,12 +55,16 @@ class AuthViewSet(viewsets.GenericViewSet):
 
 
 class KorisnikList(generics.ListAPIView):
+    """ lista svih korisnika """
+
     permission_classes = [permissions.IsAdminUser]
     queryset = Korisnik.objects.all().order_by('-id')
     serializer_class = KorisnikListSerializer
 
 
 class KorisnikDetail(generics.RetrieveUpdateDestroyAPIView):
+    """ editabilni detalji korisnika po korisnickom imenu """
+
     permission_classes = [IsKorisnikOwner | permissions.IsAdminUser]
     queryset = Korisnik.objects.all()
     serializer_class = KorisnikDetailSerializer

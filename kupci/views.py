@@ -7,12 +7,16 @@ from .serializers import KupacSerializer, Kupac2Serializer
 
 
 class KupacList(generics.ListCreateAPIView):
+    """ lista svih kupaca """
+
     permission_classes = [IsAuthenticated]
     queryset = Kupac.objects.all()
     serializer_class = KupacSerializer
 
 
 class KupacByName(generics.ListAPIView):
+    """ detalji kupca po imenu """
+
     permission_classes = [permissions.IsAdminUser]
     serializer_class = KupacSerializer
 
@@ -25,12 +29,16 @@ class KupacByName(generics.ListAPIView):
 
 
 class KupacStanList(generics.ListCreateAPIView):
+    """ lista kupaca sa stanovima """
+
     permission_classes = [IsAuthenticated]
     queryset = Kupac.objects.all()
     serializer_class = Kupac2Serializer
 
 
 class KupacStanDetail(generics.RetrieveUpdateDestroyAPIView):
+    """ kupac po imenu sa stanom/vima """
+
     permission_classes = [permissions.IsAdminUser]
     queryset = Kupac.objects.all()
     serializer_class = Kupac2Serializer
