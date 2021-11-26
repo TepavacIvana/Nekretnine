@@ -10,7 +10,7 @@ from .filters import PonudaByFilters
 
 
 class PonudaList(generics.ListCreateAPIView):
-    """ lista svih ponuda """
+    """ lista svih ponuda i kreiranje ponude"""
 
     permission_classes = [IsAuthenticated]
     queryset = Ponuda.objects.all()

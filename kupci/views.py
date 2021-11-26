@@ -7,7 +7,7 @@ from .serializers import KupacSerializer, Kupac2Serializer
 
 
 class KupacList(generics.ListCreateAPIView):
-    """ lista svih kupaca """
+    """ lista svih kupaca i kreiranje kupca"""
 
     permission_classes = [IsAuthenticated]
     queryset = Kupac.objects.all()
@@ -28,7 +28,7 @@ class KupacByName(generics.ListAPIView):
         return queryset
 
 
-class KupacStanList(generics.ListCreateAPIView):
+class KupacStanList(generics.ListAPIView):
     """ lista kupaca sa stanovima """
 
     permission_classes = [IsAuthenticated]
@@ -36,7 +36,7 @@ class KupacStanList(generics.ListCreateAPIView):
     serializer_class = Kupac2Serializer
 
 
-class KupacStanDetail(generics.RetrieveUpdateDestroyAPIView):
+class KupacStanDetail(generics.RetrieveAPIView):
     """ kupac po imenu sa stanom/vima """
 
     permission_classes = [permissions.IsAdminUser]

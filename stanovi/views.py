@@ -11,7 +11,7 @@ from .filters import StanByFilters
 from .permissions import IsKorisnikOwner
 
 
-class KorisnikStanList(generics.ListCreateAPIView):
+class KorisnikStanList(generics.ListAPIView):
     """ lista vlasnika sa stanovima """
 
     permission_classes = [permissions.IsAuthenticated]
@@ -19,7 +19,7 @@ class KorisnikStanList(generics.ListCreateAPIView):
     serializer_class = KorisnikSerializer
 
 
-class KorisnikStanDetail(generics.RetrieveUpdateDestroyAPIView):
+class KorisnikStanDetail(generics.RetrieveAPIView):
     """ vlasnik po korisnickom imenu sa stanom/vima """
 
     permission_classes = [permissions.IsAdminUser]
@@ -33,7 +33,7 @@ class KorisnikStanDetail(generics.RetrieveUpdateDestroyAPIView):
 
 
 class StanList(generics.ListCreateAPIView):
-    """ lista svih stanova """
+    """ lista svih stanova i kreiranje stana"""
 
     permission_classes = [permissions.IsAuthenticated]
     queryset = Stan.objects.all()
