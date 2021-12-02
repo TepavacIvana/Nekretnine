@@ -4,10 +4,7 @@ from django.contrib.auth.models import BaseUserManager
 from rest_framework.authtoken.models import Token
 from rest_framework import serializers
 
-from .models import *
-
-
-Korisnik = get_user_model()
+from .models import Korisnik
 
 
 class KorisnikRegisterSerializer(serializers.ModelSerializer):

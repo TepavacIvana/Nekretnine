@@ -1,8 +1,19 @@
+from datetime import date
+
 from django.db import models
+
+from korisnici.models import Korisnik
+from kupci.models import Kupac
 
 
 class Stan(models.Model):
-    advertised = models.DateTimeField(auto_now_add=True)
+    # class StatusApt(models.TextChoices):
+    #     AVAILABLE = 'Available', "Available"
+    #     RESERVED = 'Reserved', "Reserved"
+    #     SOLD = 'sold', "Sold"
+
+    id_stana = models.BigAutoField(db_column='id_stana', primary_key=True)
+    advertised = models.DateField(default=date.today)
     district = models.CharField(max_length=50)
     address = models.CharField(max_length=50)
     lamella = models.CharField(max_length=20)
@@ -12,20 +23,21 @@ class Stan(models.Model):
     orientation = models.CharField(max_length=30)
     num_of_terraces = models.IntegerField()
     price = models.IntegerField()
+    # status_apt = models.CharField(max_length=50, choices=StatusApt.choices, default=StatusApt.AVAILABLE)
     available = models.BooleanField(default=True)
-    reserved = models.BooleanField(default=False)
-    sold = models.BooleanField(default=False)
     image = models.ImageField(upload_to='static/images/', default='static/images/stan.jpg')
-    owner = models.ForeignKey("korisnici.Korisnik", related_name='stanovi', on_delete=models.CASCADE)
-    buyer = models.ForeignKey("kupci.Kupac", related_name='stanovi', on_delete=models.CASCADE, blank=True, null=True)
+    """ owner = prodavac """
+    owner = models.ForeignKey(Korisnik, related_name='stanovi', on_delete=models.CASCADE)
 
     class Meta:
         # ordering = ['-advertised']
-        ordering = ['price']            # ascending
+        # ordering = ['price']            # ascending
         # ordering = ['-price']           # descending
+        ordering = ['-id_stana']
 
     def __str__(self):
-        return self.address
+        # return self.address
+        return f"{self.id_stana}, {self.address}"
 
     @property
     def image_url(self):

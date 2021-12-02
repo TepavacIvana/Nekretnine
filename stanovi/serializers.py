@@ -1,33 +1,47 @@
 from rest_framework import serializers
-from django.apps import apps
-from .models import Stan
 
-Korisnik = apps.get_model("korisnici", "Korisnik")
+from ponude.serializers import PonudaSerializer
+from stanovi.models import Stan
+from korisnici.models import Korisnik
+from ponude.models import Ponuda
 
 
-class KorisnikStanSerializer(serializers.ModelSerializer):
+class ProdavacStanSerializer(serializers.ModelSerializer):
     class Meta:
         model = Stan
         fields = ('address',)
 
 
-class KorisnikSerializer(serializers.ModelSerializer):
-    stanovi = KorisnikStanSerializer(many=True, read_only=True)
+class ProdavacSerializer(serializers.ModelSerializer):
+    stanovi = ProdavacStanSerializer(many=True, read_only=True)
 
     class Meta:
         model = Korisnik
         fields = ('username', 'stanovi')
 
 
-class StanSerializer(serializers.ModelSerializer):
+class SamoStanSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Stan
-        fields = ('owner', 'buyer', 'advertised', 'district', 'address', 'lamella', 'size', 'floor', 'num_of_rooms',
-                  'orientation', 'num_of_terraces', 'price', 'available', 'reserved', 'sold', 'image')
+        fields = ('id_stana',
+                  'owner',
+                  'advertised',
+                  'district',
+                  'address',
+                  'lamella',
+                  'size',
+                  'floor',
+                  'num_of_rooms',
+                  'orientation',
+                  'num_of_terraces',
+                  'price',
+                  'available',
+                  'image')
 
 
-class StanKorisnikSerializer(serializers.ModelSerializer):
-    stanovi_set = StanSerializer(many=True)
+class StanProdavacSerializer(serializers.ModelSerializer):
+    stanovi_set = SamoStanSerializer(many=True)
 
     class Meta:
         model = Korisnik
@@ -41,3 +55,42 @@ class StanKorisnikSerializer(serializers.ModelSerializer):
             each['owner'] = owner
         stanovi = stanovi_set_serializer.create(stanovi_validated_data)
         return owner
+
+
+class ListaPonudaStanaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Ponuda
+        fields = (
+            "id_ponude",
+            "buyer",
+            "sales_status",
+            "price_for_buyer",
+            "note",
+            "contract_num",
+            "contract_date",
+            "prodaja_detail",
+            "approved",
+        )
+
+
+class StanSerializer(serializers.ModelSerializer):
+    lista_ponuda_stana = ListaPonudaStanaSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Stan
+        fields = ('id_stana',
+                  'owner',
+                  'advertised',
+                  'district',
+                  'address',
+                  'lamella',
+                  'size',
+                  'floor',
+                  'num_of_rooms',
+                  'orientation',
+                  'num_of_terraces',
+                  'price',
+                  'available',
+                  'image',
+                  "lista_ponuda_stana",
+                  )

@@ -2,23 +2,32 @@ from rest_framework import generics, mixins, permissions
 from rest_framework.authentication import TokenAuthentication, BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
 
+from ponude.models import Ponuda
 from .models import Kupac
-from .serializers import KupacSerializer, Kupac2Serializer
+from .serializers import KupacSerializer, SamoKupacSerializer
 
 
-class KupacList(generics.ListCreateAPIView):
-    """ lista svih kupaca i kreiranje kupca"""
+class KupacCreate(generics.CreateAPIView):
+    """ kreiranje kupca """
 
     permission_classes = [IsAuthenticated]
     queryset = Kupac.objects.all()
-    serializer_class = KupacSerializer
+    serializer_class = SamoKupacSerializer
+
+
+class KupacList(generics.ListAPIView):
+    """ lista svih kupaca """
+
+    permission_classes = [IsAuthenticated]
+    queryset = Kupac.objects.all()
+    serializer_class = SamoKupacSerializer
 
 
 class KupacByName(generics.ListAPIView):
     """ detalji kupca po imenu """
 
     permission_classes = [permissions.IsAdminUser]
-    serializer_class = KupacSerializer
+    serializer_class = SamoKupacSerializer
 
     def get_queryset(self):
         queryset = Kupac.objects.all()
@@ -28,23 +37,26 @@ class KupacByName(generics.ListAPIView):
         return queryset
 
 
-class KupacStanList(generics.ListAPIView):
-    """ lista kupaca sa stanovima """
+class KupacPonudeList(generics.ListAPIView):
+    """ lista svih kupaca sa ponudama """
 
     permission_classes = [IsAuthenticated]
     queryset = Kupac.objects.all()
-    serializer_class = Kupac2Serializer
+    serializer_class = KupacSerializer
 
 
-class KupacStanDetail(generics.RetrieveAPIView):
-    """ kupac po imenu sa stanom/vima """
+class KupacIdPonude(generics.ListAPIView):
+    """ kupac po id-ju sa ponudama """
 
-    permission_classes = [permissions.IsAdminUser]
+    permission_classes = [IsAuthenticated]
     queryset = Kupac.objects.all()
-    serializer_class = Kupac2Serializer
-    lookup_field = 'full_or_company_name'
+    serializer_class = KupacSerializer
+    lookup_field = 'id_kupca'
 
-    def myview(self, request):
-        buyer = [obj.kupac for obj in Kupac.objects.all()]
-        return request, {'buyer': buyer}
+    def get_queryset(self):
+        queryset = Kupac.objects.all()
+        id_kupca = self.kwargs['id_kupca']
+        if self.kwargs:
+            queryset = queryset.filter(id_kupca__icontains=id_kupca)
+        return queryset
 
