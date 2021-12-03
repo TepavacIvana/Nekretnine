@@ -35,13 +35,36 @@ class PonudaDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Ponuda.objects.all()
     serializer_class = PonudaSerializer
 
-    def get(self, request, *args, **kwargs):
-        return self.retrieve(request, *args, **kwargs)
-
     def put(self, request, *args, **kwargs):
-        cena_stana_ponude = request.data['price_for_buyer']
-        print(cena_stana_ponude)
 
+
+
+        id_ponude = kwargs['pk']
+        id_stana = request.data['apartment']  # get ID Stana
+        qurey_stan = Stan.objects.values('price').filter(id_stana=id_stana)  # Preuzmi obj Stan sa tim IDem
+        cena_stana_prodavac = qurey_stan[0]['price']
+        cena_stana_ponude = int(request.data['price_for_buyer'])
+
+        qPonude = Ponuda.objects.values_list().filter(id_ponude=1)
+        qPonude.update(approved=True)
+
+
+        # print(type(cena_stana_prodavac))
+
+        # print("cena_stana_prodavac")
+        # print("###########################")
+        # print(cena_stana_prodavac)
+
+        # print("cena_stana_ponude")
+        # print("###########################")
+        # print(cena_stana_ponude)
+
+        print('test')
+        #Ponuda.objects.filter(id_ponude=1).update(note="TEST NOTE")
+
+        # if cena_stana_prodavac == cena_stana_ponude:
+        # else:
+        #     print('NONO')
 
         return self.update(request, *args, **kwargs)
 
@@ -63,7 +86,6 @@ class PonudaBy(viewsets.ModelViewSet):
         my_set = self.get_queryset()
         serializer = self.get_serializer_class()(my_set)
         return Response(serializer.data)
-
 
 # class Odobrenje(generics.RetrieveUpdateAPIView):
 #     queryset = Stan.objects.all()
