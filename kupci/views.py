@@ -2,7 +2,6 @@ from rest_framework import generics, mixins, permissions
 from rest_framework.authentication import TokenAuthentication, BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
 
-from ponude.models import Ponuda
 from .models import Kupac
 from .serializers import KupacSerializer, SamoKupacSerializer
 

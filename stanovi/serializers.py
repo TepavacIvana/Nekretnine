@@ -1,6 +1,5 @@
 from rest_framework import serializers
 
-from ponude.serializers import PonudaSerializer
 from stanovi.models import Stan
 from korisnici.models import Korisnik
 from ponude.models import Ponuda

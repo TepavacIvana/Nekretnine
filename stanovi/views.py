@@ -5,7 +5,6 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from korisnici.models import Korisnik
-from ponude.models import Ponuda
 from .filters import StanByFilters
 from .models import Stan
 from .serializers import ProdavacSerializer, SamoStanSerializer, StanSerializer
@@ -33,7 +32,7 @@ class ProdavacStanDetail(generics.RetrieveAPIView):
 
 
 class StanCreate(generics.CreateAPIView):
-    """ kreiranje stana"""
+    """ kreiranje stana """
 
     permission_classes = [permissions.IsAuthenticated]
     queryset = Stan.objects.all()
@@ -85,7 +84,7 @@ class StanBy(viewsets.ModelViewSet):
 
 
 class StanPonudeList(generics.ListAPIView):
-    """ lista svih stanova sa ponudama"""
+    """ lista svih stanova sa ponudama """
 
     permission_classes = [IsAuthenticated]
     queryset = Stan.objects.all()

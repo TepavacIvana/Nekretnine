@@ -3,7 +3,6 @@ from datetime import date
 from django.db import models
 
 from korisnici.models import Korisnik
-from kupci.models import Kupac
 
 
 class Stan(models.Model):
@@ -36,7 +35,6 @@ class Stan(models.Model):
         ordering = ['-id_stana']
 
     def __str__(self):
-        # return self.address
         return f"{self.id_stana}, {self.address}"
 
     @property

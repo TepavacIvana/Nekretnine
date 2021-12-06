@@ -1,4 +1,4 @@
-from django.contrib.auth import get_user_model, logout
+from django.contrib.auth import logout
 from django.core.exceptions import ImproperlyConfigured
 from rest_framework import viewsets, status, generics, permissions
 from rest_framework.decorators import action

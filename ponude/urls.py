@@ -4,7 +4,6 @@ from .views import (
     PonudaList,
     PonudaDetail,
     PonudaBy,
-   # Odobrenje,
 )
 
 urlpatterns = [
@@ -12,5 +11,4 @@ urlpatterns = [
     path('ponude-list/', PonudaList.as_view()),
     path('ponude/<int:pk>', PonudaDetail.as_view()),
     path('ponude-by/', PonudaBy.as_view({'get': 'list'})),
-    #path('odobrenje/<int:id_ponude>', Odobrenje.as_view()),
 ]
