@@ -10,7 +10,7 @@ class KorisnikRegisterSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Korisnik
-        fields = ('id', 'first_name', 'last_name', 'email', 'username', 'password', 'password2')
+        fields = ('id', 'first_name', 'last_name', 'email', 'username', 'password', 'password2', 'role')
 
     def validate_username(self, value):
         korisnik = Korisnik.objects.filter(username=value)
@@ -66,10 +66,10 @@ class EmptySerializer(serializers.Serializer):
 class KorisnikListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Korisnik
-        fields = ('id', 'first_name', 'last_name', 'email', 'username', 'password')
+        fields = ('id', 'first_name', 'last_name', 'email', 'username', 'password', 'role')
 
 
 class KorisnikDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Korisnik
-        fields = ('first_name', 'last_name', 'username', 'password', 'password2')
+        fields = ('first_name', 'last_name', 'username', 'password', 'password2', 'role')

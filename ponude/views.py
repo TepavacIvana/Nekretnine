@@ -5,6 +5,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
+from korisnici.permissions import IsFinancesMember
 from stanovi.models import Stan
 from .models import Ponuda
 from .serializers import PonudaSerializer
@@ -30,7 +31,7 @@ class PonudaList(generics.ListAPIView):
 class PonudaDetail(generics.RetrieveUpdateDestroyAPIView):
     """ editabilni detalji ponude po id-ju i odobrenja """
 
-    permission_classes = [permissions.IsAdminUser]
+    permission_classes = [permissions.IsAdminUser | IsFinancesMember]
     queryset = Ponuda.objects.all()
     serializer_class = PonudaSerializer
 

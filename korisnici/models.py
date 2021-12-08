@@ -12,7 +12,7 @@ class Korisnik(AbstractUser):
     first_name = models.CharField('First name', max_length=30, blank=True, null=True)
     last_name = models.CharField('Last name', max_length=50, blank=True, null=True)
     role = models.CharField('Role', max_length=50, choices=KorisnikPristup.choices,
-                            default=KorisnikPristup.ADMINISTRATOR, blank=False, null=False)
+                            default=KorisnikPristup.PRODAVAC, blank=False, null=False)
     email = models.EmailField('Email', unique=True)
     username = models.CharField('Username', unique=True, max_length=50, blank=False, null=False)
     password = models.CharField('Password', max_length=100, blank=False, null=False)

@@ -2,6 +2,7 @@ from datetime import date
 
 from django.db import models
 
+from korisnici.models import Korisnik
 from kupci.models import Kupac
 from stanovi.models import Stan
 
@@ -23,6 +24,7 @@ class Ponuda(models.Model):
                                   related_name='lista_ponuda_stana')
     buyer = models.ForeignKey(Kupac, on_delete=models.CASCADE, db_column='id_kupca',
                               related_name='lista_ponuda_kupca')
+    finance = models.ForeignKey(Korisnik, related_name='ponude', on_delete=models.CASCADE, default=1)
     sales_status = models.CharField(max_length=50, choices=SalesStatus.choices, default=SalesStatus.POTENTIAL)
     price_for_buyer = models.IntegerField()
     note = models.TextField(blank=True)

@@ -7,4 +7,3 @@ class PonudaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ponuda
         fields = '__all__'
-
