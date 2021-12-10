@@ -1,6 +1,4 @@
-from rest_framework import permissions, exceptions
-
-from korisnici.models import Korisnik
+from rest_framework import permissions
 
 
 class IsKorisnikOwner(permissions.BasePermission):

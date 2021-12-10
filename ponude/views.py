@@ -1,6 +1,6 @@
 from rest_framework import generics, permissions, mixins, viewsets
 from rest_framework.authentication import TokenAuthentication, BasicAuthentication
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AND
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -31,7 +31,7 @@ class PonudaList(generics.ListAPIView):
 class PonudaDetail(generics.RetrieveUpdateDestroyAPIView):
     """ editabilni detalji ponude po id-ju i odobrenja """
 
-    permission_classes = [permissions.IsAdminUser | IsFinancesMember]
+    permission_classes = [IsAuthenticated & (permissions.IsAdminUser | IsFinancesMember)]
     queryset = Ponuda.objects.all()
     serializer_class = PonudaSerializer
 
